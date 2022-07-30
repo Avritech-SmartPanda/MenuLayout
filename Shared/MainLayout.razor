@@ -1,0 +1,105 @@
+﻿@inherits LayoutComponentBase
+<div class="flex flex-row">
+    @{
+        var menuVisibleClass = _menuVisible ? "" : "hidden";
+    }
+
+    <!-- Navigation -->
+    <div
+        class="@($"flex flex-col {menuVisibleClass} dark bg-gray-900  ml-0 w-[100px] relative  flex flex-col top-0 h-screen min-h-screen max-h-screen z-[200]")">
+        <div class="left-0 absolute flex flex-auto top-0 bottom-0 w-full h-full overflow-hidden z-10 shadow-md">
+            <!-- Content -->
+            <div class="flex flex-auto overflow-x-hidden overflow-y-auto overscroll-contain relative">
+                <!-- Items -->
+                <ul class="mt-24">
+                    <NavLink href="/"
+                        class="hover:bg-opacity-50 text-white mb-1 flex flex-col flex-auto justify-center p-3 rounded-md relative items-center font-medium leading-5 no-underline cursor-pointer">
+
+                        <!-- Icon -->
+                        <i
+                            class="fa-solid fa-house w-6 h-6 overflow-hidden inline-flex items-center min-w-6 min-h-6 leading-6 justify-center"></i>
+                        <!-- Title -->
+                        <div class="mt-2 font-medium leading-5 text-md cursor-pointer">
+                            Home
+                        </div>
+                    </NavLink>
+                    <NavLink
+                        class="hover:bg-indigo-500 text-white mb-1 flex flex-col flex-auto justify-center p-3 rounded-md relative items-center font-medium leading-5 no-underline cursor-pointer"
+                        href="/counter">
+
+                        <!-- Icon -->
+                        <i
+                            class="fa-solid fa-house w-6 h-6 overflow-hidden inline-flex items-center min-w-6 min-h-6 leading-6 justify-center"></i>
+                        <!-- Title-->
+                        <div class="mt-2 font-medium leading-5 text-md cursor-pointer">
+                            Counter
+                        </div>
+
+                    </NavLink>
+                    <NavLink
+                        class="hover:bg-indigo-500 text-white mb-1 flex flex-col flex-auto justify-center p-3 rounded-md relative items-center font-medium leading-5 no-underline cursor-pointer"
+                        href="/fetchdata">
+
+                        <!-- Icon -->
+                        <i
+                            class="fa-solid fa-house w-6 h-6 overflow-hidden inline-flex items-center min-w-6 min-h-6 leading-6 justify-center"></i>
+                        <!-- Title -->
+                        <div class="mt-2 font-medium leading-5 text-md cursor-pointer">
+                            Fetch Data
+                        </div>
+                    </NavLink>
+                </ul>
+            </div>
+        </div>
+        <!-- Logo -->
+        <div class="flex items-center justify-center h-20 mt-3 mb-4">
+            <img class="w-10" src="https://angular-material.fusetheme.com/assets/images/logo/logo.svg" alt="Logo image">
+        </div>
+    </div>
+    <!-- Wrapper -->
+    <div class="flex flex-col flex-auto w-full min-w-0">
+        <!-- Header -->
+        <div
+            class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+            <!-- Navigation toggle button -->
+            <button @onclick="ToggleMenu">
+                <i class="fa-solid fa-bars h-6 w-6 "></i>
+            </button>
+
+            <!-- Components -->
+            <div class="flex items-center pl-2 ml-auto space-x-1 sm:space-x-2">
+                <i class="fa-solid fa-language"></i>
+                <i class="fa-solid fa-maximize hidden md:block"></i>
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-solid fa-bookmark"></i>
+                <i class="fa-solid fa-messages"></i>
+                <i class="fa-solid fa-bell-exclamation"></i>
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+        </div>
+
+
+
+
+        <!-- Content -->
+        <div class="flex flex-col flex-auto">
+            @Body
+        </div>
+
+        <!-- Footer -->
+        <div
+            class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+            <span class="font-medium text-secondary">Realty365 &copy; 2022</span>
+        </div>
+    </div>
+</div>
+@code
+{
+    private bool _menuVisible = true;
+
+    private void ToggleMenu()
+    {
+        _menuVisible = !_menuVisible;
+    }
+}
