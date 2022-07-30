@@ -1,18 +1,27 @@
 ﻿@inherits LayoutComponentBase
 <div class="flex flex-row">
     @{
-        var menuVisibleClass = _menuVisible ? "" : "hidden";
+
+        var menuVisibleClass = _menuVisible ? "slideIn" : "slideOut hidden";
+
+        var childMenuVisibleClass = _childMenuVisible ? "slide-in-left " : "hidden slideOut";
     }
 
     <!-- Navigation -->
-    <div
-        class="@($"flex flex-col {menuVisibleClass} dark bg-gray-900  ml-0 w-[100px] relative  flex flex-col top-0 h-screen min-h-screen max-h-screen z-[200]")">
-        <div class="left-0 absolute flex flex-auto top-0 bottom-0 w-full h-full overflow-hidden z-10 shadow-md">
+
+    <nav style="box-shadow: inset -1px 0 0  rgba(241,245,249,.12);"
+        class="@($"flex flex-col {menuVisibleClass}  dark bg-gray-900  ml-0 w-[112px] min-w-[112px] relative items-center justify-center  top-0 h-screen min-h-screen max-h-screen z-[200]")">
+
+        <!-- Logo -->
+        <div class="flex h-20 mt-3 mb-4">
+            <img class="w-36" src="./logo.svg" alt="Logo image">
+        </div>
+        <div class="flex w-full h-full overflow-hidden z-10 shadow-md">
             <!-- Content -->
             <div class="flex flex-auto overflow-x-hidden overflow-y-auto overscroll-contain relative">
                 <!-- Items -->
-                <ul class="mt-24">
-                    <NavLink href="/"
+                <div class="px-2 item-center">
+                    <NavLink href="/" @onclick="ToggleChildMenu"
                         class="hover:bg-gray-800 text-white mb-1 flex flex-col flex-auto justify-center p-3 rounded-md relative items-center font-medium leading-5 no-underline cursor-pointer">
 
                         <!-- Icon -->
@@ -48,14 +57,51 @@
                             Fetch Data
                         </div>
                     </NavLink>
-                </ul>
+                </div>
             </div>
         </div>
-        <!-- Logo -->
-        <div class="flex items-center justify-center h-20 mt-3 mb-4">
-            <img class="w-10" src="https://angular-material.fusetheme.com/assets/images/logo/logo.svg" alt="Logo image">
+    </nav>
+
+    <!-- Child menu -->
+    <div class="@($"flex flex-col {childMenuVisibleClass} dark bg-gray-900 w-[395px] px-2 py-6 mx-0 h-screen min-h-screen max-h-screen")">
+        <div
+            class="text-md font-medium leading-5 rounded-md flex justify-start  relative px-3 py-4 no-underline hover:bg-gray-800 text-white mb-1  flex-row cursor-pointer">
+            <!-- Icon -->
+            <i
+                class="fa-solid fa-house mr-4 w-6 h-6 overflow-hidden inline-flex  min-w-6 min-h-6 leading-6 justify-center"></i>
+            <!-- Title & Subtitle -->
+            <div class="flex flex-col justify-start">
+                <div>
+                    Active item
+                </div>
+                <div class="text-sm leading-6">
+                    Manually marked as active
+                </div>
+            </div>
+        </div>
+        <div
+            class="text-md font-medium leading-5 rounded-md flex justify-start relative px-3 py-4 no-underline hover:bg-gray-800 text-white mb-1  flex-row  cursor-pointer">
+            <!-- Icon -->
+             <i class="fa-solid fa-layer-group mr-4 w-6 h-6 overflow-hidden inline-flex  min-w-6 min-h-6 leading-6 "></i>
+            <!-- Title & Subtitle -->
+            <div class="flex flex-col justify-start">
+                <div>
+                    Settings
+                </div>
+                <div class="text-sm leading-6">
+                    Manually marked as active
+                </div>
+            </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
     <!-- Wrapper -->
     <div class="flex flex-col flex-auto w-full min-w-0">
         <!-- Header -->
@@ -94,12 +140,38 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
 @code
+
 {
+
     private bool _menuVisible = true;
 
+    private bool _childMenuVisible = false;
+
     private void ToggleMenu()
+
     {
+
         _menuVisible = !_menuVisible;
+        if (!_menuVisible)
+        {
+            _childMenuVisible = false;
+        }
+
+    }
+
+    private void ToggleChildMenu()
+
+    {
+
+        _childMenuVisible = !_childMenuVisible;
+        
+
     }
 }

@@ -442,20 +442,11 @@ video {
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
-.absolute{
-  position: absolute;
-}
 .relative{
   position: relative;
 }
 .top-0{
   top: 0px;
-}
-.left-0{
-  left: 0px;
-}
-.bottom-0{
-  bottom: 0px;
 }
 .z-\[200\]{
   z-index: 200;
@@ -466,11 +457,18 @@ video {
 .z-49{
   z-index: 49;
 }
+.mx-0{
+  margin-left: 0px;
+  margin-right: 0px;
+}
 .ml-0{
   margin-left: 0px;
 }
-.mt-24{
-  margin-top: 6rem;
+.mt-3{
+  margin-top: 0.75rem;
+}
+.mb-4{
+  margin-bottom: 1rem;
 }
 .mb-1{
   margin-bottom: 0.25rem;
@@ -478,11 +476,8 @@ video {
 .mt-2{
   margin-top: 0.5rem;
 }
-.mt-3{
-  margin-top: 0.75rem;
-}
-.mb-4{
-  margin-bottom: 1rem;
+.mr-4{
+  margin-right: 1rem;
 }
 .ml-auto{
   margin-left: auto;
@@ -505,14 +500,14 @@ video {
 .h-screen{
   height: 100vh;
 }
+.h-20{
+  height: 5rem;
+}
 .h-full{
   height: 100%;
 }
 .h-6{
   height: 1.5rem;
-}
-.h-20{
-  height: 5rem;
 }
 .h-16{
   height: 4rem;
@@ -529,8 +524,11 @@ video {
 .min-h-6{
   min-height: 1.5rem;
 }
-.w-\[100px\]{
-  width: 100px;
+.w-\[112px\]{
+  width: 112px;
+}
+.w-36{
+  width: 9rem;
 }
 .w-full{
   width: 100%;
@@ -538,8 +536,11 @@ video {
 .w-6{
   width: 1.5rem;
 }
-.w-10{
-  width: 2.5rem;
+.w-\[395px\]{
+  width: 395px;
+}
+.min-w-\[112px\]{
+  min-width: 112px;
 }
 .min-w-6{
   min-width: 1.5rem;
@@ -604,6 +605,22 @@ video {
 .p-8{
   padding: 2rem;
 }
+.px-2{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.py-6{
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.px-3{
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+.py-4{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
 .px-4{
   padding-left: 1rem;
   padding-right: 1rem;
@@ -613,6 +630,9 @@ video {
 }
 .text-md{
   font-size: 0.8125rem;
+}
+.text-sm{
+  font-size: 0.75rem;
 }
 .font-medium{
   font-weight: 500;
@@ -705,6 +725,36 @@ a, .btn-link {
     content: "An error has occurred."
 }
 
+
+.slide-in-left {
+    -webkit-animation: slide-in-left .5s cubic-bezier(.25, .46, .45, .94) both;
+    animation: slide-in-left .5s cubic-bezier(.25, .46, .45, .94) both;
+    position: relative;
+    height: 100vh;
+    left: -296px
+}
+  
+
+
+@-webkit-keyframes slide-in-left  {
+     100% {
+        transform: scale(1);
+        opacity: 1;
+        transition: 1s;
+        left: 0;
+    }
+}
+
+@keyframes slide-in-left {
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        transition: 1s;
+        left: 0;
+    }
+}
+
 .hover\:bg-gray-800:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
@@ -747,5 +797,4 @@ a, .btn-link {
     padding-right: 1.5rem;
   }
 }
-
-
+    
