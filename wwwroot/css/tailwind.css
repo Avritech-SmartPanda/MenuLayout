@@ -734,6 +734,29 @@ a, .btn-link {
     left: -296px
 }
   
+.slideIn{
+    -webkit-animation: slide-in-left .5s cubic-bezier(.25, .46, .45, .94) both;
+    animation: slide-in-left .5s cubic-bezier(.25, .46, .45, .94) both;
+    position: relative;
+    height: 100vh;
+    left: 0;
+}
+.slide-out-left {
+    -webkit-animation: slide-in-left .5s cubic-bezier(.25, .46, .45, .94) both;
+    animation: slide-in-left .5s cubic-bezier(.25, .46, .45, .94) both;
+    position: relative;
+    height: 100vh;
+    left: 0
+}
+  
+.slideOut{
+    -webkit-animation: slide-in-left .5s cubic-bezier(.25, .46, .45, .94) both;
+    animation: slide-in-left .5s cubic-bezier(.25, .46, .45, .94) both;
+    position: relative;
+    height: 100vh;
+    left: -26px
+}
+  
 
 
 @-webkit-keyframes slide-in-left  {
@@ -745,13 +768,70 @@ a, .btn-link {
     }
 }
 
-@keyframes slide-in-left {
+@keyframes slide-out-left {
 
     100% {
         transform: scale(1);
         opacity: 1;
         transition: 1s;
         left: 0;
+    }
+}
+
+@-webkit-keyframes slide-out-left  {
+     100% {
+        transform: scale(1);
+        opacity: 1;
+        transition: 1s;
+        left: -296px;
+    }
+}
+
+@keyframes slide-in-left {
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        transition: 1s;
+        left: -296px;
+    }
+}
+    
+@-webkit-keyframes slideIn  {
+     100% {
+        transform: scale(1);
+        opacity: 1;
+        transition: 1s;
+        left: 0;
+    }
+}
+
+@keyframes slideIn {
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        transition: 1s;
+        left: 0;
+    }
+}
+    
+@-webkit-keyframes slideOut  {
+     100% {
+        transform: scale(1);
+        opacity: 1;
+        transition: 1s;
+        left: -26px;
+    }
+}
+
+@keyframes slideOut {
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        transition: 1s;
+        left: -26px;
     }
 }
 
