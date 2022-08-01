@@ -66,42 +66,40 @@ a, .btn-link {
     content: "An error has occurred."
 }
 
-
-.slide-in-left {
-    -webkit-animation: slide-in-left .5s cubic-bezier(.25, .46, .45, .94) both;
-    animation: slide-in-left .5s cubic-bezier(.25, .46, .45, .94) both;
-    position: relative;
-    height: 100vh;
-    left: -296px
-}
-  
-/* @keyframes slide-in-left{
-    100% { transform: translateX(0%); }
+.childMenu{
+    position: fixed;
+    left: 0;
+    width: 250px;
+    margin-top: 60px;
+    transform: translateX(-250px);
+    transition: transform 250ms ease-in-out;
 }
 
-@-webkit-keyframes slide-in-left {
-    100% { -webkit-transform: translateX(0%); }
-} */
-
-@-webkit-keyframes slide-in-left  {
-     100% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        opacity: 1;
-        transition: 1s;
-        left: 0;
+@keyframes slide-in {
+    from {
+      transform: translateX(-100%);
     }
-}
-
-@keyframes slide-in-left {
-
-    100% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        opacity: 1;
-        transition: 1s;
-        left: 0;
+    to {
+      transform: translateX(0%);
+      opacity: 1;
     }
-}
+  }
 
+  .slideIn {
+    animation: slide-in 1000ms;
+  }
+@keyframes slide-out {
+    from {
+      transform: translateX(0%);
+      opacity: 0.25;
+    }
+    to {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+  }
+
+  .slideOut {
+    animation: slide-out 1000ms;
+  }
 

@@ -2,16 +2,15 @@
 <div class="flex flex-row">
     @{
 
-        var menuVisibleClass = _menuVisible ? "" : "hidden";
+        var menuVisibleClass = _menuVisible ? "slideIn" : "hidden";
 
-        var childMenuVisibleClass = _childMenuVisible ? "" : "hidden";
+        var childMenuVisibleClass = _childMenuVisible ? "slideIn left-[112px]" : "slideOut hidden";
     }
 
     <!-- Navigation -->
 
     <nav style="box-shadow: inset -1px 0 0  rgba(241,245,249,.12);"
         class="@($"flex flex-col {menuVisibleClass}  dark bg-gray-900  ml-0 w-[112px] min-w-[112px] relative items-center justify-center  top-0 h-screen min-h-screen max-h-screen z-[200]")">
-
         <!-- Logo -->
         <div class="flex h-20 mt-3 mb-4">
             <img class="w-36" src="./logo.svg" alt="Logo image">
@@ -21,79 +20,50 @@
             <div class="flex flex-auto overflow-x-hidden overflow-y-auto overscroll-contain relative">
                 <!-- Items -->
                 <div class="px-2 item-center">
-                    <NavLink href="/" @onclick="ToggleChildMenu"
-                        class="hover:bg-gray-800 text-white mb-1 flex flex-col flex-auto justify-center p-3 rounded-md relative items-center font-medium leading-5 no-underline cursor-pointer">
+                    @foreach (var menuItem in menuItems)
+                    {
+                        @if(menuItem?.Children?.Count > 0){
+                           this.selectedMenu = menuItem;
+                            <NavLink @onclick="ToggleChildMenu" class="hover:bg-gray-800 text-white mb-1 flex flex-col flex-auto justify-center p-3 rounded-md relative items-center font-medium leading-5 no-underline cursor-pointer">
+                                <i class="@($"fa-solid {menuItem.Icon} w-6 h-6 overflow-hidden inline-flex items-center min-w-6 min-h-6 leading-6 justify-center")"></i>
+                                <div class="mt-2 font-medium leading-5 text-md cursor-pointer">@menuItem.Title</div>
+                            </NavLink>
+                        }else{
+                            <NavLink href="@menuItem.Link" class="hover:bg-gray-800 text-white mb-1 flex flex-col flex-auto justify-center p-3 rounded-md relative items-center font-medium leading-5 no-underline cursor-pointer">
+                                <i class="@($"fa-solid {menuItem.Icon} w-6 h-6 overflow-hidden inline-flex items-center min-w-6 min-h-6 leading-6 justify-center")"></i>
+                                <div class="mt-2 font-medium leading-5 text-md cursor-pointer">@menuItem.Title</div>
+                            </NavLink>
+                        }  
+                    }
 
-                        <!-- Icon -->
-                        <i
-                            class="fa-solid fa-house w-6 h-6 overflow-hidden inline-flex items-center min-w-6 min-h-6 leading-6 justify-center"></i>
-                        <!-- Title -->
-                        <div class="mt-2 font-medium leading-5 text-md cursor-pointer">
-                            Home
-                        </div>
-                    </NavLink>
-                    <NavLink
-                        class="hover:bg-gray-800 text-white mb-1 flex flex-col flex-auto justify-center p-3 rounded-md relative items-center font-medium leading-5 no-underline cursor-pointer"
-                        href="/counter">
-
-                        <!-- Icon -->
-                        <i
-                            class="fa-solid fa-house w-6 h-6 overflow-hidden inline-flex items-center min-w-6 min-h-6 leading-6 justify-center"></i>
-                        <!-- Title-->
-                        <div class="mt-2 font-medium leading-5 text-md cursor-pointer">
-                            Counter
-                        </div>
-
-                    </NavLink>
-                    <NavLink
-                        class="hover:bg-gray-800 text-white mb-1 flex flex-col flex-auto justify-center p-3 rounded-md relative items-center font-medium leading-5 no-underline cursor-pointer"
-                        href="/fetchdata">
-
-                        <!-- Icon -->
-                        <i
-                            class="fa-solid fa-house w-6 h-6 overflow-hidden inline-flex items-center min-w-6 min-h-6 leading-6 justify-center"></i>
-                        <!-- Title -->
-                        <div class="mt-2 font-medium leading-5 text-md cursor-pointer">
-                            Fetch Data
-                        </div>
-                    </NavLink>
                 </div>
             </div>
         </div>
     </nav>
 
+
     <!-- Child menu -->
-    <div class="@($"flex flex-col {childMenuVisibleClass} dark bg-gray-900 w-[395px] px-2 py-6 mx-0 h-screen min-h-screen max-h-screen")">
-        <div
-            class="text-md font-medium leading-5 rounded-md flex justify-start  relative px-3 py-4 no-underline hover:bg-gray-800 text-white mb-1  flex-row cursor-pointer">
-            <!-- Icon -->
-            <i
-                class="fa-solid fa-house mr-4 w-6 h-6 overflow-hidden inline-flex  min-w-6 min-h-6 leading-6 justify-center"></i>
-            <!-- Title & Subtitle -->
-            <div class="flex flex-col justify-start">
-                <div>
-                    Active item
-                </div>
-                <div class="text-sm leading-6">
-                    Manually marked as active
-                </div>
-            </div>
-        </div>
-        <div
-            class="text-md font-medium leading-5 rounded-md flex justify-start relative px-3 py-4 no-underline hover:bg-gray-800 text-white mb-1  flex-row  cursor-pointer">
-            <!-- Icon -->
-             <i class="fa-solid fa-layer-group mr-4 w-6 h-6 overflow-hidden inline-flex  min-w-6 min-h-6 leading-6 "></i>
-            <!-- Title & Subtitle -->
-            <div class="flex flex-col justify-start">
-                <div>
-                    Settings
-                </div>
-                <div class="text-sm leading-6">
-                    Manually marked as active
-                </div>
-            </div>
-        </div>
+     <div
+        class="@($"flex flex-col {childMenuVisibleClass} dark bg-gray-900 w-[250px] px-2 py-6 mx-0 h-screen min-h-screen max-h-screen z-[199] absolute ")">
+
+        @foreach (var menuItem in selectedMenu?.Children)
+            {
+                <NavLink href="@menuItem.Link" @onclick="ToggleChildMenu" 
+                    class="text-md font-medium leading-5 rounded-md flex justify-start  relative px-3 py-4 no-underline hover:bg-gray-800 text-white mb-1  flex-row cursor-pointer">
+                         <i class="@($"fa-solid {menuItem.Icon} mr-4 w-6 h-6 overflow-hidden inline-flex  min-w-6 min-h-6 leading-6 justify-center")"></i>
+                    <!-- Title & Subtitle -->
+                    <div class="flex flex-col justify-start">
+                        <div>
+                            @menuItem.Title
+                        </div>
+                        <div class="text-sm leading-6">
+                            @menuItem.Subtitle
+                        </div>
+                    </div>
+                </NavLink>
+            }
     </div>
+
 
 
 
@@ -105,8 +75,7 @@
     <!-- Wrapper -->
     <div class="flex flex-col flex-auto w-full min-w-0">
         <!-- Header -->
-        <div
-            class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+        <div class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
             <!-- Navigation toggle button -->
             <button @onclick="ToggleMenu">
                 <i class="fa-solid fa-bars h-6 w-6 "></i>
@@ -142,36 +111,58 @@
 </div>
 
 
-
-
-
-
 @code
-
-{
-
+{    
     private bool _menuVisible = true;
-
     private bool _childMenuVisible = false;
+    public Menu? selectedMenu;
 
     private void ToggleMenu()
-
-    {
-
-        _menuVisible = !_menuVisible;
+    {  
+         _menuVisible = !_menuVisible;
         if (!_menuVisible)
         {
             _childMenuVisible = false;
         }
-
     }
 
+ 
     private void ToggleChildMenu()
-
     {
-
         _childMenuVisible = !_childMenuVisible;
-        
-
     }
+ 
+
+
+    private List<Menu> menuItems = new List<Menu>{
+            new Menu{
+                Title = "Home",
+                Icon = "fa-house",
+                Link = "/"
+            },
+            new Menu{
+                Title = "Counter",
+                Icon = "fa-lines-leaning",
+                Link = "/counter"
+            },
+            new Menu{
+                Title = "Fetch Data",
+                Icon = "fa-layer-group",
+                Link = "/fetchdata",
+                Children = new List<ChildMenu>{
+                    new ChildMenu{
+                    Title = "Fetch Data",
+                    Icon = "fa-layer-plus",
+                    Link = "/fetchdata",
+                    Subtitle = "Fetching Data"
+                    },
+                    new ChildMenu{
+                    Title = "A multi line navigation item title example which works just fine",
+                    Icon = "fa-lemon",
+                    Link = "/fetchdata"
+                    }
+                }
+            }
+        };
+
 }
