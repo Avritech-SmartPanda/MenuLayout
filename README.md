@@ -1,2 +1,2 @@
-# MenuLayout
+# MenuLayout.
 Fuse compact menu 
