@@ -133,4 +133,38 @@
     {
         _childMenuVisible = !_childMenuVisible;
     }
+ 
+
+
+    private List<Menu> menuItems = new List<Menu>{
+            new Menu{
+                Title = "Home",
+                Icon = "fa-house",
+                Link = "/"
+            },
+            new Menu{
+                Title = "Counter",
+                Icon = "fa-lines-leaning",
+                Link = "/counter"
+            },
+            new Menu{
+                Title = "Fetch Data",
+                Icon = "fa-layer-group",
+                Link = "#",
+                Children = new List<ChildMenu>{
+                    new ChildMenu{
+                    Title = "Fetch Data",
+                    Icon = "fa-layer-plus",
+                    Link = "/fetchdata",
+                    Subtitle = "Fetching Data"
+                    },
+                    new ChildMenu{
+                    Title = "A multi line navigation item title example which works just fine",
+                    Icon = "fa-lemon",
+                    Link = "/fetchdata"
+                    }
+                }
+            }
+        };
+
 }
