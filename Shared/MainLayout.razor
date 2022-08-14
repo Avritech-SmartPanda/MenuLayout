@@ -1,16 +1,17 @@
-﻿@inherits LayoutComponentBase
+﻿@using MenuLayout.Shared
+@inherits LayoutComponentBase
 <div class="flex flex-row">
     @{
 
-        var menuVisibleClass = _menuVisible ? "slideIn" : "hidden";
-
-        var childMenuVisibleClass = _childMenuVisible ? "slideIn left-[112px]" : "slideOut hidden";
+        var menuVisibleClass = _menuVisible ? "flex slideIn" : "slideOut hidden";
+        var isSmallScreenClass = _isSmallScreen ? "hidden" : "flex";
+        var childMenuVisibleClass = _childMenuVisible ? "slideIn left-[130px]" : "slideOut hidden";
     }
 
     <!-- Navigation -->
 
     <nav style="box-shadow: inset -1px 0 0  rgba(241,245,249,.12);"
-        class="@($"flex flex-col {menuVisibleClass}  dark bg-gray-900  ml-0 w-[112px] min-w-[112px] relative items-center justify-center  top-0 h-screen min-h-screen max-h-screen z-[200]")">
+        class="@($"xs:{isSmallScreenClass} flex-col  sm:{menuVisibleClass}  dark bg-gray-900  ml-0 w-[130px] min-w-[130px] relative items-center justify-center  top-0 min-h-screen z-[200]")">
         <!-- Logo -->
         <div class="flex h-20 mt-3 mb-4">
             <img class="w-36" src="./logo.svg" alt="Logo image">
@@ -22,18 +23,25 @@
                 <div class="px-2 item-center">
                     @foreach (var menuItem in menuItems)
                     {
-                        @if(menuItem?.Children?.Count > 0){
-                           this.selectedMenu = menuItem;
-                            <NavLink @onclick="ToggleChildMenu" class="hover:bg-gray-800 text-white mb-1 flex flex-col flex-auto justify-center p-3 rounded-md relative items-center font-medium leading-5 no-underline cursor-pointer">
-                                <i class="@($"fa-solid {menuItem.Icon} w-6 h-6 overflow-hidden inline-flex items-center min-w-6 min-h-6 leading-6 justify-center")"></i>
+                        @if (menuItem?.Children?.Count > 0)
+                        {
+                            this.selectedMenu = menuItem;
+                            <NavLink @onclick="ToggleChildMenu"
+                        class=" hover:bg-gray-800 text-white mb-1 flex flex-col items-center justify-center p-3 rounded-md relative font-medium leading-5 no-underline hover:no-underline cursor-pointer">
+                                <Property365Icon Icon=@menuItem.Icon
+                            class="w-6 h-6 overflow-hidden inline-flex items-center min-w-6 min-h-6 leading-6 justify-center" />
                                 <div class="mt-2 font-medium leading-5 text-md cursor-pointer">@menuItem.Title</div>
                             </NavLink>
-                        }else{
-                            <NavLink href="@menuItem.Link" class="hover:bg-gray-800 text-white mb-1 flex flex-col flex-auto justify-center p-3 rounded-md relative items-center font-medium leading-5 no-underline cursor-pointer">
-                                <i class="@($"fa-solid {menuItem.Icon} w-6 h-6 overflow-hidden inline-flex items-center min-w-6 min-h-6 leading-6 justify-center")"></i>
+                        }
+                        else
+                        {
+                            <NavLink href="@menuItem.Link"
+                        class="hover:bg-gray-800 text-white mb-1 flex flex-col flex-auto justify-center p-3 rounded-md relative items-center font-medium leading-5 no-underline hover:no-underline cursor-pointer">
+                                <Property365Icon Icon=@menuItem.Icon
+                            class="w-6 h-6 overflow-hidden inline-flex items-center min-w-6 min-h-6 leading-6 justify-center" />
                                 <div class="mt-2 font-medium leading-5 text-md cursor-pointer">@menuItem.Title</div>
                             </NavLink>
-                        }  
+                        }
                     }
 
                 </div>
@@ -43,62 +51,54 @@
 
 
     <!-- Child menu -->
-     <div
-        class="@($"flex flex-col {childMenuVisibleClass} dark bg-gray-900 w-[250px] px-2 py-6 mx-0 h-screen min-h-screen max-h-screen z-[199] absolute ")">
+    <div
+        class="@($"flex flex-col {childMenuVisibleClass} dark bg-gray-900 w-[310px] px-2 py-6 mx-0  min-h-screen  z-[199] absolute ")">
 
         @foreach (var menuItem in selectedMenu?.Children)
-            {
-                <NavLink href="@menuItem.Link" @onclick="ToggleChildMenu" 
-                    class="text-md font-medium leading-5 rounded-md flex justify-start  relative px-3 py-4 no-underline hover:bg-gray-800 text-white mb-1  flex-row cursor-pointer">
-                         <i class="@($"fa-solid {menuItem.Icon} mr-4 w-6 h-6 overflow-hidden inline-flex  min-w-6 min-h-6 leading-6 justify-center")"></i>
-                    <!-- Title & Subtitle -->
-                    <div class="flex flex-col justify-start">
-                        <div>
-                            @menuItem.Title
-                        </div>
-                        <div class="text-sm leading-6">
-                            @menuItem.Subtitle
-                        </div>
+        {
+            <NavLink href="@menuItem.Link" @onclick="ToggleChildMenu"
+            class="text-md font-medium leading-5 rounded-md flex justify-start  relative px-3 py-4 no-underline hover:no-underline hover:bg-gray-800 text-white mb-1  flex-row cursor-pointer">
+                <Property365Icon Icon=@menuItem.Icon
+                class="mr-3 w-6 h-6 overflow-hidden inline-flex  min-w-6 min-h-6 leading-6 justify-center" />
+                <div class="flex flex-col justify-start">
+                    <div>
+                        @menuItem.Title
                     </div>
-                </NavLink>
-            }
+                    <div class="text-sm leading-6">
+                        @menuItem.Subtitle
+                    </div>
+                </div>
+            </NavLink>
+        }
     </div>
-
-
-
-
-
-
-
 
 
     <!-- Wrapper -->
     <div class="flex flex-col flex-auto w-full min-w-0">
         <!-- Header -->
-        <div class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+        <div class="relative flex flex-0 items-center w-full h-16 px-4 md:px-10 z-49 dark:shadow-none border-b bg-card dark:bg-transparent print:hidden">
+
             <!-- Navigation toggle button -->
-            <button @onclick="ToggleMenu">
-                <i class="fa-solid fa-bars h-6 w-6 "></i>
+            <button @onclick="ToggleMenu" class="cursor-pointer active:border-none active:ring-none active:outline-none ">
+                <Property365Icon Icon="menu" class="w-6 h-6 active:border-none active:ring-none active:outline-none " />
             </button>
 
             <!-- Components -->
-            <div class="flex items-center pl-2 ml-auto space-x-1 sm:space-x-2">
-                <i class="fa-solid fa-language"></i>
-                <i class="fa-solid fa-maximize hidden md:block"></i>
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <i class="fa-solid fa-bookmark"></i>
-                <i class="fa-solid fa-messages"></i>
-                <i class="fa-solid fa-bell-exclamation"></i>
-                <i class="fa-solid fa-user"></i>
+            <div class="flex items-center pl-2 ml-auto space-x-1 sm:space-x-6">
+                <Property365Icon Icon="language" class="w-6 h-6 cursor-pointer" />
+                <Property365Icon Icon="open_with"  class="w-6 h-6 cursor-pointer" />
+                <Property365Icon Icon="search"  class="w-6 h-6 cursor-pointer" />
+                <Property365Icon Icon="bookmark"  class="w-6 h-6 cursor-pointer" />
+                <Property365Icon Icon="circle_notifications"  class="w-6 h-6 cursor-pointer" />
+                <Property365Icon Icon="account_circle"  class="w-6 h-6 cursor-pointer" />
             </div>
-
         </div>
 
 
 
 
         <!-- Content -->
-        <div class="flex flex-col flex-auto p-8">
+        <div class="flex flex-col flex-auto">
             @Body
         </div>
 
@@ -112,57 +112,25 @@
 
 
 @code
-{    
+{
     private bool _menuVisible = true;
     private bool _childMenuVisible = false;
+    private bool _isSmallScreen = true;
     public Menu? selectedMenu;
 
     private void ToggleMenu()
-    {  
-         _menuVisible = !_menuVisible;
+    {
+        _menuVisible = !_menuVisible;
+        _isSmallScreen = !_isSmallScreen;
         if (!_menuVisible)
         {
             _childMenuVisible = false;
         }
     }
 
- 
+
     private void ToggleChildMenu()
     {
         _childMenuVisible = !_childMenuVisible;
     }
- 
-
-
-    private List<Menu> menuItems = new List<Menu>{
-            new Menu{
-                Title = "Home",
-                Icon = "fa-house",
-                Link = "/"
-            },
-            new Menu{
-                Title = "Counter",
-                Icon = "fa-lines-leaning",
-                Link = "/counter"
-            },
-            new Menu{
-                Title = "Fetch Data",
-                Icon = "fa-layer-group",
-                Link = "#",
-                Children = new List<ChildMenu>{
-                    new ChildMenu{
-                    Title = "Fetch Data",
-                    Icon = "fa-layer-plus",
-                    Link = "/fetchdata",
-                    Subtitle = "Fetching Data"
-                    },
-                    new ChildMenu{
-                    Title = "A multi line navigation item title example which works just fine",
-                    Icon = "fa-lemon",
-                    Link = "/fetchdata"
-                    }
-                }
-            }
-        };
-
 }
